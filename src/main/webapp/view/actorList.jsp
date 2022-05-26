@@ -16,17 +16,24 @@
 	crossorigin="anonymous">
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <link rel="stylesheet"
 	href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">
-	
+
 <script
 	src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+<script src="https://kit.fontawesome.com/81a2ed02b0.js"
+	crossorigin="anonymous"></script>
+
 </head>
 <body>
 	<div class="container">
 		<h1>Listado de Actores y Actrices</h1>
+
+		<a href="${pageContext.request.contextPath}/DetalleActorServlet"
+			class="btn btn-secondary">Crear Actor/Actriz</a>
 
 		<table id="tblActores" class="table">
 			<thead class="table-dark">
@@ -34,14 +41,24 @@
 					<th>Id</th>
 					<th>Nombre</th>
 					<th>Apellido</th>
+					<th>Acciones</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var="a" items="${actores}">
 					<tr>
-						<td><a href="${pageContext.request.contextPath}/DetalleActorServlet?id=${a.getId()}"><c:out value="${a.getId()}"></c:out></a></td>
+						<td><c:out value="${a.getId()}"></c:out></td>
 						<td><c:out value="${a.getFirst_name()}"></c:out></td>
 						<td><c:out value="${a.getLast_name()}"></c:out></td>
+						<td><a
+							href="${pageContext.request.contextPath}/DetalleActorServlet?id=${a.getId()}"
+							class="btn btn-secondary"><i class="fa-solid fa-film"></i></a> <a
+							href="${pageContext.request.contextPath}/DetalleActorServlet?id=${a.getId()}"
+							class="btn btn-secondary"><i
+								class="fa-solid fa-pen-to-square"></i></a> <a
+							href="${pageContext.request.contextPath}/DetalleActorServlet?id=${a.getId()}&op=del"
+							class="btn btn-secondary"><i class="fa-solid fa-trash"></i></a></td>
+
 					</tr>
 				</c:forEach>
 			</tbody>

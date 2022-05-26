@@ -30,17 +30,36 @@ public class DetalleActorServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		int id = Integer.parseInt(request.getParameter("id"));
+		String op = request.getParameter("op");
 		
-		System.out.println(id);
+		String strId = request.getParameter("id");
+		int id = 0;
+		if (strId != null)
+			id = Integer.parseInt(strId);
 		
 		ActorDAO aDAO = new ActorDAO();
 		
-		Actor a = aDAO.read(id);
+		if (op==null && id > 0) {
+			//código para consultar un usuario
+			
+			Actor a = aDAO.read(id);
+			
+			request.setAttribute("actor", a);
+			
+			getServletContext().getRequestDispatcher("/view/actorDetails.jsp").forward(request, response);	
+		} else if (id == 0) {
+			
+			getServletContext().getRequestDispatcher("/view/actorDetails.jsp").forward(request, response);
+			
+		} else if (op.equalsIgnoreCase("del")) {
+			//código para borrar un usuario
+			
+			aDAO.delete(id);
+			
+			response.sendRedirect(request.getContextPath() + "/ActorServlet");
+			
+		} 
 		
-		request.setAttribute("actor", a);
-		
-		getServletContext().getRequestDispatcher("/view/actorDetails.jsp").forward(request, response);
 	
 	}
 
@@ -48,8 +67,22 @@ public class DetalleActorServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		//TODO actualiza Actor
+		
+		
+		String nombre = request.getParameter("nombre");
+		String apellido = request.getParameter("apellido");
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		Actor a = new Actor(id, nombre, apellido);
+		ActorDAO aDAO = new ActorDAO();
+		
+		aDAO.update(a);
+		
+		response.sendRedirect(request.getContextPath() + "/ActorServlet");
+		
 	}
+	
+	
 
 }

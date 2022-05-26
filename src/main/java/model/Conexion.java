@@ -12,7 +12,6 @@ public class Conexion {
 		try {
 			
 			//Class.forName("oracle.jdbc.driver.OracleDriver"); //para Oracle
-			
 			Class.forName("com.mysql.jdbc.Driver"); //para MySQL
 			
 			//con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "OT", "kupita"); //para Oracle
