@@ -30,9 +30,9 @@ public class DetalleActorServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String op = request.getParameter("op");
-		
+		String op = request.getParameter("op");		
 		String strId = request.getParameter("id");
+		
 		int id = 0;
 		if (strId != null)
 			id = Integer.parseInt(strId);
@@ -72,15 +72,28 @@ public class DetalleActorServlet extends HttpServlet {
 		
 		String nombre = request.getParameter("nombre");
 		String apellido = request.getParameter("apellido");
-		int id = Integer.parseInt(request.getParameter("id"));
 		
-		Actor a = new Actor(id, nombre, apellido);
+		String strId = request.getParameter("id"); 
+		
+			
+		Actor a = null;
 		ActorDAO aDAO = new ActorDAO();
 		
-		aDAO.update(a);
+		//Si strId no es null, quiere decir que está haciendo Update y no Insert
+		if (!strId.isEmpty()) {
+			int id = Integer.parseInt(strId);
+			a = new Actor(id, nombre, apellido);
+			aDAO.update(a);
+		} else {
+			a = new Actor();
+			a.setFirst_name(nombre);
+			a.setLast_name(apellido);
+			
+			aDAO.create(a);
+		}
 		
 		response.sendRedirect(request.getContextPath() + "/ActorServlet");
-		
+	
 	}
 	
 	

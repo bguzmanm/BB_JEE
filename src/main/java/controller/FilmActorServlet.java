@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,20 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.Actor;
 import model.ActorDAO;
-
-
+import model.FilmActor;
+import model.FilmActorDAO;
 
 /**
- * Servlet implementation class ActorServlet
+ * Servlet implementation class FilmActorServlet
  */
-@WebServlet("/ActorServlet")
-public class ActorServlet extends HttpServlet {
+@WebServlet("/FilmActorServlet")
+public class FilmActorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ActorServlet() {
+    public FilmActorServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,13 +34,19 @@ public class ActorServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		int idActor = Integer.parseInt(request.getParameter("id"));
+
+		FilmActorDAO faDAO = new FilmActorDAO();
+		
+		List<FilmActor> lista = faDAO.read(idActor);
 		ActorDAO aDAO = new ActorDAO();
 		
-		List<Actor> lista = aDAO.read();
+		Actor a = aDAO.read(idActor); 
 		
-		request.setAttribute("actores", lista);
+		request.setAttribute("films", lista);
+		request.setAttribute("actor", a);
 		
-		getServletContext().getRequestDispatcher("/view/actorList.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/view/peliculasActor.jsp").forward(request, response);
 		
 	}
 

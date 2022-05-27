@@ -17,5 +17,8 @@ public interface IActorDAO {
 	public void update(Actor a);
 	public void delete(Actor a);
 	public void delete(int id);
+	
+	
+	
 		
 }

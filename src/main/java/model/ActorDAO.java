@@ -11,7 +11,20 @@ public class ActorDAO implements IActorDAO {
 
 	@Override
 	public void create(Actor a) {
-		// TODO Auto-generated method stub
+
+		String sql = "insert into actor (first_name, last_name) values ('" + a.getFirst_name() + "', '" + a.getLast_name() + "')";
+		
+		try {
+
+			Connection c = Conexion.getCon();
+			Statement s = c.createStatement();
+			s.execute(sql);
+
+		} catch (SQLException e) {
+			System.out.println("Error en metodo create()");
+			e.printStackTrace();
+		}
+		
 
 	}
 
